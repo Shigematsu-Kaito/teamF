@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>最終目標リスト</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
         .progress-bar {
             width: 100%;
             background-color: #f3f3f3;
@@ -19,23 +34,98 @@
             width: 0;
             transition: width 0.5s;
         }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 80%;
+            max-width: 400px;
+        }
+        li {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            margin-top: 10px;
+            width: 50%; /* ボタンを細くする */
+        }
+        .delete-button:hover {
+            background-color: #e53935;
+        }
+        .reset-button {
+            background-color: #f44336;
+            color: white;
+            margin-top: 20px;
+        }
+        .reset-button:hover {
+            background-color: #e53935;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        nav ul {
+            display: flex;
+            gap: 10px;
+        }
+        nav li {
+            margin-bottom: 0;
+        }
+        nav a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #d0d0d0;
+        }
     </style>
 </head>
 <body>
     <h1>最終目標リスト</h1>
     <ul id="goalList"></ul>
-    <button type="button" onclick="resetGoals()">すべて削除</button>
- 
+    <button type="button" class="reset-button" onclick="resetGoals()">すべて削除</button>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const goalList = document.getElementById('goalList');
             const goals = JSON.parse(localStorage.getItem('goals')) || [];
- 
+
             function renderGoals() {
                 goalList.innerHTML = '';
                 goals.forEach((goal, index) => {
                     const listItem = document.createElement('li');
- 
+
                     const goalLink = document.createElement('a');
                     goalLink.href = 'GoalDetail.html';
                     goalLink.textContent = goal.title;
@@ -43,7 +133,7 @@
                         localStorage.setItem('selectedGoal', JSON.stringify(goal));
                     });
                     listItem.appendChild(goalLink);
- 
+
                     const progressBar = document.createElement('div');
                     progressBar.className = 'progress-bar';
                     const progressBarFill = document.createElement('div');
@@ -51,28 +141,29 @@
                     progressBarFill.style.width = goal.progress ? `${goal.progress}%` : '0';
                     progressBar.appendChild(progressBarFill);
                     listItem.appendChild(progressBar);
- 
+
                     const deleteButton = document.createElement('button');
                     deleteButton.textContent = '削除';
+                    deleteButton.className = 'delete-button';
                     deleteButton.addEventListener('click', () => {
                         goals.splice(index, 1);
                         localStorage.setItem('goals', JSON.stringify(goals));
                         renderGoals();
                     });
                     listItem.appendChild(deleteButton);
- 
+
                     goalList.appendChild(listItem);
                 });
             }
- 
+
             function resetGoals() {
                 localStorage.removeItem('goals');
                 goals.length = 0;
                 renderGoals();
             }
- 
+
             window.resetGoals = resetGoals; // ここでresetGoals関数をグローバルに公開します
- 
+
             renderGoals();
         });
     </script>
