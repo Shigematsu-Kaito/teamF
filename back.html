@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背景変更</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .background-option {
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px;
+            border: 2px solid transparent;
+            background-size: cover;
+        }
+        .selected {
+            border: 2px solid blue;
+        }
+        #bg1 { background-image: url('path/to/image1.jpg'); }
+        #bg2 { background-image: url('path/to/image2.jpg'); }
+        #bg3 { background-image: url('path/to/image3.jpg'); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>背景を選択してください</h1>
+        <div id="bg1" class="background-option" onclick="selectBackground('path/to/image1.jpg', this)"></div>
+        <div id="bg2" class="background-option" onclick="selectBackground('path/to/image2.jpg', this)"></div>
+        <div id="bg3" class="background-option" onclick="selectBackground('path/to/image3.jpg', this)"></div>
+        <br>
+        <button onclick="applyBackground()">変更</button>
+    </div>
+
+    <script>
+        let selectedBackground = '';
+        let previousSelectedElement = null;
+
+        function selectBackground(imageUrl, element) {
+            selectedBackground = imageUrl;
+            if (previousSelectedElement) {
+                previousSelectedElement.classList.remove('selected');
+            }
+            element.classList.add('selected');
+            previousSelectedElement = element;
+        }
+
+        function applyBackground() {
+            if (selectedBackground) {
+                localStorage.setItem('selectedBackground', selectedBackground);
+                window.location.href = 'm.html';
+            } else {
+                alert('背景を選択してください');
+            }
+        }
+    </script>
+</body>
+</html>
