@@ -6,7 +6,7 @@
     <title>最終目標</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -14,17 +14,16 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f7f9fc;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
         }
         h1 {
             margin-bottom: 20px;
-            color: #333;
-            font-size: 2em;
         }
         form {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 80%;
             max-width: 400px;
@@ -32,27 +31,26 @@
         label {
             display: block;
             margin-bottom: 10px;
-            color: #333;
         }
         input, textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 8px;
+            border-radius: 4px;
         }
         button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #4caf50;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
         nav {
             margin-top: 20px;
@@ -73,7 +71,7 @@
             color: #333;
             background-color: #e0e0e0;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 4px;
             text-align: center;
             transition: background-color 0.3s;
         }
@@ -108,6 +106,20 @@
                 goalDescription.value = "";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 背景の適用
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
+        });
     </script>
     <nav>
         <ul>

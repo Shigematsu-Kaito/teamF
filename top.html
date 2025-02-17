@@ -6,7 +6,7 @@
     <title>トップページ</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -14,20 +14,19 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f7f9fc;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s;
         }
         h1 {
             margin-bottom: 20px;
-            color: #333;
-            font-size: 2em;
         }
         nav {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 90%;
-            max-width: 500px;
+            width: 80%;
+            max-width: 400px;
         }
         ul {
             list-style: none;
@@ -35,21 +34,20 @@
             margin: 0;
         }
         li {
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         a {
             display: block;
             text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            padding: 15px;
-            border-radius: 8px;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
             text-align: center;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: background-color 0.3s;
         }
         a:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
+            background-color: #d0d0d0;
         }
     </style>
 </head>
@@ -59,7 +57,22 @@
         <ul>
             <li><a href="Gamification.html">目標設定</a></li>
             <li><a href="Goal.html">目標リスト</a></li>
+            <li><a href="back.html">背景変更</a></li>
         </ul>
     </nav>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
