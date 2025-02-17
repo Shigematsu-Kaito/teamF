@@ -4,15 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>トップページ</title>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectedBackground = localStorage.getItem('selectedBackground');
-            if (selectedBackground) {
-                document.body.style.backgroundImage = `url(${selectedBackground})`;
-                document.body.style.backgroundSize = 'cover';
-            }
-        });
-    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        nav {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #d0d0d0;
+        }
+    </style>
 </head>
 <body>
     <h1>トップページ</h1>
@@ -20,9 +57,22 @@
         <ul>
             <li><a href="Gamification.html">目標設定</a></li>
             <li><a href="Goal.html">目標リスト</a></li>
+            <li><a href="back.html">背景変更</a></li>
         </ul>
     </nav>
-    <br>
-    <button onclick="window.location.href='back.html'">背景を変更する</button>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
