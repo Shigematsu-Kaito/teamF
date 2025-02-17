@@ -12,20 +12,97 @@
             cursor: pointer;
             margin: 10px;
             border: 2px solid transparent;
+            background-size: cover;
+            background-position: center;
         }
         .selected {
             border: 2px solid blue;
         }
-        #bg1 { background-color: lightblue; }
-        #bg2 { background-color: lightgreen; }
-        #bg3 { background-color: lightcoral; }
+        #bg1 { background-image: url('https://sozaino.site/wp-content/uploads/2022/07/mouse1.png'); }
+        #bg2 { background-image: url('https://sozaino.site/wp-content/uploads/2021/10/recu44.png'); }
+        #bg3 { background-image: url('https://sozaino.site/wp-content/uploads/2023/05/cheese19.png'); }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 10px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #d0d0d0;
+        }
     </style>
 </head>
 <body>
     <h1>背景を選択してください</h1>
-    <div id="bg1" class="background-option" onclick="selectBackground('lightblue', this)"></div>
-    <div id="bg2" class="background-option" onclick="selectBackground('lightgreen', this)"></div>
-    <div id="bg3" class="background-option" onclick="selectBackground('lightcoral', this)"></div>
+    <div id="bg1" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2022/07/mouse1.png)', this)"></div>
+    <div id="bg2" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2021/10/recu44.png)', this)"></div>
+    <div id="bg3" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2023/05/cheese19.png)', this)"></div>
     <br>
     <button onclick="applyBackground()">変更</button>
 
@@ -33,8 +110,8 @@
         let selectedBackground = '';
         let previousSelectedElement = null;
 
-        function selectBackground(color, element) {
-            selectedBackground = color;
+        function selectBackground(background, element) {
+            selectedBackground = background;
             if (previousSelectedElement) {
                 previousSelectedElement.classList.remove('selected');
             }
@@ -45,7 +122,7 @@
         function applyBackground() {
             if (selectedBackground) {
                 localStorage.setItem('selectedBackground', selectedBackground);
-                window.location.href = 'm.html';
+                window.location.href = 'top.html';
             } else {
                 alert('背景を選択してください');
             }

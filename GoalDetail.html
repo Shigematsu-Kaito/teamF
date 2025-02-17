@@ -6,7 +6,7 @@
     <title>目標詳細</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -14,17 +14,17 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #f7f9fc;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
         }
         h1 {
             margin-top: 20px;
             margin-bottom: 20px;
-            color: #333;
-            font-size: 2em;
         }
         .progress-bar {
             width: 100%;
-            background-color: #e0e0e0;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
             margin-top: 5px;
@@ -37,8 +37,8 @@
         }
         form {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 80%;
             max-width: 400px;
@@ -47,39 +47,38 @@
         label {
             display: block;
             margin-bottom: 10px;
-            color: #333;
         }
         input, textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 8px;
+            border-radius: 4px;
         }
         button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #4caf50;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
         .delete-button {
             background-color: #f44336;
             color: white;
             margin-top: 10px;
-            width: 50%;
+            width: 50%; /* ボタンを細くする */
         }
         .delete-button:hover {
             background-color: #e53935;
         }
         ul {
-            list-style: none;
+            list-style: none; /* 箇条書き記号を削除 */
             padding: 0;
             margin: 0;
             width: 80%;
@@ -87,8 +86,8 @@
         }
         li {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 10px;
             display: flex;
@@ -111,7 +110,7 @@
             color: #333;
             background-color: #e0e0e0;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 4px;
             text-align: center;
             transition: background-color 0.3s;
         }
@@ -127,7 +126,7 @@
         <div class="progress-bar-fill" id="progressBarFill"></div>
     </div>
     <form id="subGoalForm">
-        <label for="subGoalTitle">目標を追加:</label>
+        <label for="subGoalTitle">小さい目標を追加:</label>
         <input type="text" id="subGoalTitle" name="subGoalTitle">
         <button type="button" onclick="addSubGoal()">追加</button>
     </form>
@@ -151,7 +150,7 @@
                 goalDetail.innerHTML = `
                     <h2>${goal.title}</h2>
                     <p>${goal.description}</p>
-                    
+
                 `;
             } else {
                 goalDetail.innerHTML = '<p>目標が選択されていません。</p>';
@@ -217,6 +216,18 @@
             window.addSubGoal = addSubGoal;
             renderSubGoals();
             updateGoalCompletion();
+
+            // 背景の適用
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
         });
     </script>
 </body>

@@ -6,7 +6,7 @@
     <title>最終目標リスト</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
@@ -14,17 +14,17 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #f7f9fc;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
         }
         h1 {
             margin-top: 20px;
             margin-bottom: 20px;
-            color: #333;
-            font-size: 2em;
         }
         .progress-bar {
             width: 100%;
-            background-color: #e0e0e0;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
             border-radius: 5px;
             overflow: hidden;
             margin-top: 5px;
@@ -44,8 +44,8 @@
         }
         li {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-bottom: 10px;
             display: flex;
@@ -54,28 +54,27 @@
         }
         a {
             text-decoration: none;
-            color: #007bff;
+            color: #333;
             margin-bottom: 10px;
-            font-size: 1.2em;
         }
         button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #4caf50;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
         .delete-button {
             background-color: #f44336;
             color: white;
             margin-top: 10px;
-            width: 50%;
+            width: 50%; /* ボタンを細くする */
         }
         .delete-button:hover {
             background-color: #e53935;
@@ -84,7 +83,6 @@
             background-color: #f44336;
             color: white;
             margin-top: 20px;
-            border-radius: 8px;
         }
         .reset-button:hover {
             background-color: #e53935;
@@ -105,7 +103,7 @@
             color: #333;
             background-color: #e0e0e0;
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 4px;
             text-align: center;
             transition: background-color 0.3s;
         }
@@ -165,9 +163,21 @@
                 renderGoals();
             }
 
-            window.resetGoals = resetGoals;
+            window.resetGoals = resetGoals; // ここでresetGoals関数をグローバルに公開します
 
             renderGoals();
+
+            // 背景の適用
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
         });
     </script>
     <nav>
