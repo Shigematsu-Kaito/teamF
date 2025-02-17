@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最終目標リスト</title>
+    <style>
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>最終目標リスト</h1>
+    <ul id="goalList"></ul>
+    <button type="button" onclick="resetGoals()">すべて削除</button>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const goalList = document.getElementById('goalList');
+            const goals = JSON.parse(localStorage.getItem('goals')) || [];
+ 
+            function renderGoals() {
+                goalList.innerHTML = '';
+                goals.forEach((goal, index) => {
+                    const listItem = document.createElement('li');
+ 
+                    const goalLink = document.createElement('a');
+                    goalLink.href = 'GoalDetail.html';
+                    goalLink.textContent = goal.title;
+                    goalLink.addEventListener('click', () => {
+                        localStorage.setItem('selectedGoal', JSON.stringify(goal));
+                    });
+                    listItem.appendChild(goalLink);
+ 
+                    const progressBar = document.createElement('div');
+                    progressBar.className = 'progress-bar';
+                    const progressBarFill = document.createElement('div');
+                    progressBarFill.className = 'progress-bar-fill';
+                    progressBarFill.style.width = goal.progress ? `${goal.progress}%` : '0';
+                    progressBar.appendChild(progressBarFill);
+                    listItem.appendChild(progressBar);
+ 
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '削除';
+                    deleteButton.addEventListener('click', () => {
+                        goals.splice(index, 1);
+                        localStorage.setItem('goals', JSON.stringify(goals));
+                        renderGoals();
+                    });
+                    listItem.appendChild(deleteButton);
+ 
+                    goalList.appendChild(listItem);
+                });
+            }
+ 
+            function resetGoals() {
+                localStorage.removeItem('goals');
+                goals.length = 0;
+                renderGoals();
+            }
+ 
+            window.resetGoals = resetGoals; // ここでresetGoals関数をグローバルに公開します
+ 
+            renderGoals();
+        });
+    </script>
+    <nav>
+        <ul>
+            <li><a href="Gamification.html">トップページ</a></li>
+            <li><a href="Gamification.html">戻る</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

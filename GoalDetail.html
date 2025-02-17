@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目標詳細</title>
+    <style>
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>目標詳細</h1>
+    <div id="goalDetail"></div>
+    <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <form id="subGoalForm">
+        <label for="subGoalTitle">目標を追加:</label>
+        <input type="text" id="subGoalTitle" name="subGoalTitle">
+        <button type="button" onclick="addSubGoal()">追加</button>
+    </form>
+    <ul id="subGoalList"></ul>
+    <nav>
+        <ul>
+            <li><a href="Goal.html">目標リストに戻る</a></li>
+            <li><a href="Gamification.html">トップページ</a></li>
+        </ul>
+    </nav>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const goalDetail = document.getElementById('goalDetail');
+            const subGoalList = document.getElementById('subGoalList');
+            const progressBarFill = document.getElementById('progressBarFill');
+            const goal = JSON.parse(localStorage.getItem('selectedGoal'));
+            const subGoals = JSON.parse(localStorage.getItem(`subGoals_${goal.title}`)) || [];
+ 
+            if (goal) {
+                goalDetail.innerHTML = `
+                    <h2>${goal.title}</h2>
+                    <p>${goal.description}</p>
+                   
+                `;
+            } else {
+                goalDetail.innerHTML = '<p>目標が選択されていません。</p>';
+            }
+ 
+            function renderSubGoals() {
+                subGoalList.innerHTML = '';
+                subGoals.forEach((subGoal, index) => {
+                    const listItem = document.createElement('li');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = subGoal.completed;
+                    checkbox.addEventListener('change', () => {
+                        subGoals[index].completed = checkbox.checked;
+                        localStorage.setItem(`subGoals_${goal.title}`, JSON.stringify(subGoals));
+                        updateGoalCompletion();
+                        renderSubGoals();
+                    });
+ 
+                    listItem.appendChild(checkbox);
+                    listItem.appendChild(document.createTextNode(subGoal.title));
+ 
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '削除';
+                    deleteButton.addEventListener('click', () => {
+                        subGoals.splice(index, 1);
+                        localStorage.setItem(`subGoals_${goal.title}`, JSON.stringify(subGoals));
+                        updateGoalCompletion();
+                        renderSubGoals();
+                    });
+                    listItem.appendChild(deleteButton);
+ 
+                    subGoalList.appendChild(listItem);
+                });
+            }
+ 
+            function addSubGoal() {
+                const subGoalTitle = document.getElementById('subGoalTitle').value;
+                if (subGoalTitle.trim() !== "") {
+                    subGoals.push({ title: subGoalTitle, completed: false });
+                    localStorage.setItem(`subGoals_${goal.title}`, JSON.stringify(subGoals));
+                    renderSubGoals();
+                    document.getElementById('subGoalTitle').value = '';
+                }
+            }
+ 
+            function updateGoalCompletion() {
+                const completedSubGoals = subGoals.filter(subGoal => subGoal.completed).length;
+                const totalSubGoals = subGoals.length;
+                const progress = totalSubGoals > 0 ? (completedSubGoals / totalSubGoals) * 100 : 0;
+                progressBarFill.style.width = progress + '%';
+ 
+                goal.progress = progress;
+                const goals = JSON.parse(localStorage.getItem('goals')) || [];
+                const goalIndex = goals.findIndex(g => g.title === goal.title);
+                if (goalIndex !== -1) {
+                    goals[goalIndex].progress = progress;
+                    localStorage.setItem('goals', JSON.stringify(goals));
+                }
+            }
+ 
+            window.addSubGoal = addSubGoal;
+            renderSubGoals();
+            updateGoalCompletion();
+        });
+    </script>
+</body>
+</html>
