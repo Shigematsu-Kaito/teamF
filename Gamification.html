@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最終目標</title>
+</head>
+<body>
+    <h1>最終目標設定</h1>
+    <form id="goalForm">
+        <label for="goalTitle">最終目標タイトルを入力してください:</label>
+        <input type="text" id="goalTitle" name="goalTitle">
+        <br>
+        <label for="goalDescription">目標の説明を入力してください:</label>
+        <textarea id="goalDescription" name="goalDescription"></textarea>
+        <br>
+        <button type="button" onclick="addGoal()">追加</button>
+    </form>
+ 
+    <script>
+        function addGoal() {
+            const goalTitle = document.getElementById('goalTitle');
+            const goalDescription = document.getElementById('goalDescription');
+ 
+            if (goalTitle.value.trim() !== "" && goalDescription.value.trim() !== "") {
+                const goals = JSON.parse(localStorage.getItem('goals')) || [];
+                goals.push({ title: goalTitle.value, description: goalDescription.value, completed: false });
+                localStorage.setItem('goals', JSON.stringify(goals));
+ 
+                goalTitle.value = "";
+                goalDescription.value = "";
+            }
+        }
+    </script>
+    <nav>
+        <ul>
+            <li><a href="Goal.html">目標リスト</a></li>
+            <li><a href="top.html">戻る</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
