@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>目標リスト</title>
+    <style>
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #4caf50;
+            width: 0;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <h1>目標リスト</h1>
+    <div class="progress-bar">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+    <ul id="goalList"></ul>
+    <button type="button" onclick="resetGoals()">リセット</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const goalList = document.getElementById('goalList');
+            const progressBarFill = document.getElementById('progressBarFill');
+            const goals = JSON.parse(localStorage.getItem('goals')) || [];
+
+            function updateProgressBar() {
+                const completedGoals = goals.filter(goal => goal.completed).length;
+                const totalGoals = goals.length;
+                const progress = totalGoals > 0 ? (completedGoals / totalGoals) * 100 : 0;
+                progressBarFill.style.width = progress + '%';
+            }
+
+            function renderGoals() {
+                goalList.innerHTML = '';
+                goals.forEach((goal, index) => {
+                    const listItem = document.createElement('li');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = goal.completed;
+                    checkbox.addEventListener('change', () => {
+                        goals[index].completed = checkbox.checked;
+                        localStorage.setItem('goals', JSON.stringify(goals));
+                        updateProgressBar();
+                    });
+
+                    listItem.appendChild(checkbox);
+                    listItem.appendChild(document.createTextNode(goal.text));
+                    goalList.appendChild(listItem);
+                });
+                updateProgressBar();
+            }
+
+            function resetGoals() {
+                localStorage.removeItem('goals');
+                goals.length = 0;
+                renderGoals();
+            }
+
+            window.resetGoals = resetGoals; // ここでresetGoals関数をグローバルに公開します
+
+            renderGoals();
+        });
+    </script>
+    <nav>
+        <ul>
+            <li><a href="Gamification.html">トップページ</a></li>
+            <li><a href="Gamification.html">戻る</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
