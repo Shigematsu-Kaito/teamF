@@ -5,50 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>背景変更</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-        }
         .background-option {
-            width: 150px;
-            height: 150px;
+            width: 100px;
+            height: 100px;
             display: inline-block;
             cursor: pointer;
             margin: 10px;
             border: 2px solid transparent;
             background-size: cover;
+            background-position: center;
         }
         .selected {
             border: 2px solid blue;
         }
-        #bg1 { background-image: url('C:/Users/ken83/Downloads/OIP (3).jpg'); }
-        #bg2 { background-image: url('C:/Users/ken83/Downloads/OIP (2).jpg'); }
-        #bg3 { background-image: url('C:/Users/ken83/Downloads/ダウンロード (1).jpg'); }
+        #bg1 { background-image: url('https://sozaino.site/wp-content/uploads/2022/07/mouse1.png'); }
+        #bg2 { background-image: url('https://sozaino.site/wp-content/uploads/2021/10/recu44.png'); }
+        #bg3 { background-image: url('https://sozaino.site/wp-content/uploads/2023/05/cheese19.png'); }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 10px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #d0d0d0;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>背景を選択してください</h1>
-        <div id="bg1" class="background-option" onclick="selectBackground('C:/Users/ken83/Downloads/OIP (3).jpg', this)"></div>
-        <div id="bg2" class="background-option" onclick="selectBackground('C:/Users/ken83/Downloads/OIP (2).jpg', this)"></div>
-        <div id="bg3" class="background-option" onclick="selectBackground('C:/Users/ken83/Downloads/ダウンロード (1).jpg', this)"></div>
-        <br>
-        <button onclick="applyBackground()">変更</button>
-    </div>
+    <h1>背景を選択してください</h1>
+    <div id="bg1" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2022/07/mouse1.png)', this)"></div>
+    <div id="bg2" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2021/10/recu44.png)', this)"></div>
+    <div id="bg3" class="background-option" onclick="selectBackground('url(https://sozaino.site/wp-content/uploads/2023/05/cheese19.png)', this)"></div>
+    <br>
+    <button onclick="applyBackground()">変更</button>
 
     <script>
         let selectedBackground = '';
         let previousSelectedElement = null;
 
-        function selectBackground(imageUrl, element) {
-            selectedBackground = imageUrl;
+        function selectBackground(background, element) {
+            selectedBackground = background;
             if (previousSelectedElement) {
                 previousSelectedElement.classList.remove('selected');
             }
@@ -59,7 +122,7 @@
         function applyBackground() {
             if (selectedBackground) {
                 localStorage.setItem('selectedBackground', selectedBackground);
-                window.location.href = 'm.html';
+                window.location.href = 'top.html';
             } else {
                 alert('背景を選択してください');
             }
