@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背景変更</title>
+    <style>
+        .background-option {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px;
+            border: 2px solid transparent;
+        }
+        .selected {
+            border: 2px solid blue;
+        }
+        #bg1 { background-color: lightblue; }
+        #bg2 { background-color: lightgreen; }
+        #bg3 { background-color: lightcoral; }
+    </style>
+</head>
+<body>
+    <h1>背景を選択してください</h1>
+    <div id="bg1" class="background-option" onclick="selectBackground('lightblue', this)"></div>
+    <div id="bg2" class="background-option" onclick="selectBackground('lightgreen', this)"></div>
+    <div id="bg3" class="background-option" onclick="selectBackground('lightcoral', this)"></div>
+    <br>
+    <button onclick="applyBackground()">変更</button>
+
+    <script>
+        let selectedBackground = '';
+        let previousSelectedElement = null;
+
+        function selectBackground(color, element) {
+            selectedBackground = color;
+            if (previousSelectedElement) {
+                previousSelectedElement.classList.remove('selected');
+            }
+            element.classList.add('selected');
+            previousSelectedElement = element;
+        }
+
+        function applyBackground() {
+            if (selectedBackground) {
+                localStorage.setItem('selectedBackground', selectedBackground);
+                window.location.href = 'm.html';
+            } else {
+                alert('背景を選択してください');
+            }
+        }
+    </script>
+</body>
+</html>
