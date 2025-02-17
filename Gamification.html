@@ -3,31 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>目標設定</title>
+    <title>最終目標</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            transition: background-color 0.5s, background-image 0.5s;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 10px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            background-color: #e0e0e0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #d0d0d0;
+        }
+    </style>
 </head>
 <body>
-    <h1>目標設定</h1>
+    <h1>最終目標設定</h1>
     <form id="goalForm">
-        <label for="goalInput">目標を入力してください:</label>
-        <input type="text" id="goalInput" name="goalInput">
+        <label for="goalTitle">最終目標タイトルを入力してください:</label>
+        <input type="text" id="goalTitle" name="goalTitle">
+        <br>
+        <label for="goalDescription">目標の説明を入力してください:</label>
+        <textarea id="goalDescription" name="goalDescription"></textarea>
+        <br>
         <button type="button" onclick="addGoal()">追加</button>
     </form>
 
     <script>
         function addGoal() {
-            const goalInput = document.getElementById('goalInput');
+            const goalTitle = document.getElementById('goalTitle');
+            const goalDescription = document.getElementById('goalDescription');
 
-            if (goalInput.value.trim() !== "") {
+            if (goalTitle.value.trim() !== "" && goalDescription.value.trim() !== "") {
                 const goals = JSON.parse(localStorage.getItem('goals')) || [];
-                goals.push({ text: goalInput.value, completed: false });
+                goals.push({ title: goalTitle.value, description: goalDescription.value, completed: false });
                 localStorage.setItem('goals', JSON.stringify(goals));
 
-                goalInput.value = "";
+                goalTitle.value = "";
+                goalDescription.value = "";
             }
         }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 背景の適用
+            const selectedBackground = localStorage.getItem('selectedBackground');
+            if (selectedBackground) {
+                if (selectedBackground.startsWith('url')) {
+                    document.body.style.backgroundImage = selectedBackground;
+                    document.body.style.backgroundColor = 'transparent';
+                } else {
+                    document.body.style.backgroundColor = selectedBackground;
+                    document.body.style.backgroundImage = 'none';
+                }
+            }
+        });
     </script>
-</body>
-<body>
     <nav>
         <ul>
             <li><a href="Goal.html">目標リスト</a></li>
@@ -35,5 +128,4 @@
         </ul>
     </nav>
 </body>
-
 </html>
